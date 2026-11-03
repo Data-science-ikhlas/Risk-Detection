@@ -2,22 +2,19 @@
 <html>
 <head><title>CnBees Dashboard</title>
 <style>
-body{margin:0;font-family:Arial;background:#f5f3f3;color:#17213b}.side{background:#fff0c4;padding:15px;text-align:center}main{max-width:1000px;margin:auto;padding:20px}.card{background:white;padding:20px;border-radius:18px;margin:15px 0;box-shadow:0 3px 12px #ddd}.inputs,.results{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.results{grid-template-columns:repeat(3,1fr)}input{width:90%;padding:12px;margin:8px 0;border:1px solid #ddd;border-radius:8px}button{padding:13px;background:#ffbf20;border:0;border-radius:10px;cursor:pointer;font-weight:bold}.result{background:#fff9e9;padding:15px;border-radius:12px}.recommend{background:#fff0c4;padding:18px;border-radius:12px}@media(max-width:600px){.inputs,.results{grid-template-columns:1fr 1fr}}
+*{box-sizing:border-box}body{margin:0;font-family:Arial;background:#f5f3f3;color:#17213b;display:flex}.side{width:22%;background:#fff0c4;text-align:center;padding:25px 10px}.bee{font-size:75px}main{width:78%;padding:25px}.card{background:white;padding:20px;border-radius:18px;margin-bottom:20px;box-shadow:0 3px 12px #ddd}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.results{grid-template-columns:repeat(3,1fr)}input{width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;margin-top:10px}button{background:#ffbd25;padding:14px 30px;border:0;border-radius:10px;cursor:pointer;font-weight:bold}.result{background:#fafafa;padding:15px;border-radius:13px}.recommend{background:#fff0c4;padding:18px;border-radius:12px;margin-top:15px}@media(max-width:650px){.grid,.results{grid-template-columns:1fr}.side{width:25%}main{width:75%;padding:10px}}
 </style></head>
 <body>
-<header class="side"><h1>🐝 CnBees</h1><h3>Smart Risk Detection</h3><h2>Monitor. Analyse. Réussissez.</h2></header>
-<main>
-<div class="card"><h2>📊 Informations de la campagne</h2><div class="inputs">
-<label>Objectif (DT)<input id="o" type="number" value="20000"></label><label>Montant collecté<input id="m" type="number" value="5000"></label><label>Durée totale<input id="d" type="number" value="30"></label><label>Jours écoulés<input id="j" type="number" value="10"></label>
-</div><center><button onclick="go()">Analyser la campagne</button></center></div>
-<div class="card"><h2>📈 Résultats de l'analyse</h2><div class="results" id="r"></div><div class="recommend" id="a"></div></div>
-</main>
+<aside class="side"><div class="bee">🐝</div><h1>CnBees</h1><b>Smart Risk Detection</b><h2>Monitor.<br>Analyse.<br>Réussissez.</h2><div style="font-size:50px">🚀</div></aside>
+<main><div class="card"><h2>📊 Informations de la campagne</h2><div class="grid">
+<label>🎯 Objectif<input id="o" type="number" placeholder="DT"></label><label>🪙 Collecté<input id="m" type="number" placeholder="DT"></label><label>📅 Durée<input id="d" type="number" placeholder="Jours"></label><label>✅ Écoulés<input id="j" type="number" placeholder="Jours"></label></div><center><button onclick="go()">🔍 Analyser la campagne</button></center></div>
+<div class="card"><h2>📈 Résultats de l'analyse</h2><div class="grid results" id="r"></div><div class="recommend" id="a">💡 Recommandation : En attente d'analyse</div></div></main>
 <script>
 function go(){
 let o=+document.getElementById("o").value,m=+document.getElementById("m").value,d=+document.getElementById("d").value,j=+document.getElementById("j").value;
-if(!o||m<0||!d||j<0||j>d||!document.getElementById("m").value)return alert("Vérifiez les données");
-let p=m/o*100,v=m/Math.max(j,1),f=v*d,x=m/(o*j/d||1),risk=m>=o?"Atteint":x>=.9?"Faible":x>=.6?"Moyen":"Élevé",c=risk=="Élevé"?"Augmenter la publicité":risk=="Moyen"?"Attirer des contributeurs":"Continuer la stratégie";
-document.getElementById("r").innerHTML=["Progression|"+p.toFixed(1)+"%","Jours restants|"+(d-j),"Moyenne/jour|"+v.toFixed(0)+" DT","Prévision finale|"+f.toFixed(0)+" DT","Niveau de risque|"+risk,"Alerte|"+(risk=="Élevé"?"Campagne en difficulté":"Situation favorable")].map(s=>"<div class='result'>"+s.split("|")[0]+"<h2>"+s.split("|")[1]+"</h2></div>").join("");
+if(!document.getElementById("o").value||!document.getElementById("m").value||!document.getElementById("d").value||!document.getElementById("j").value||o<=0||m<0||d<=0||j<0||j>d)return alert("Vérifiez les données");
+let p=m/o*100,v=m/Math.max(j,1),f=v*d,x=m/(o*j/d||1),risk=m>=o?"Atteint":x>=.9?"Faible":x>=.6?"Moyen":"Élevé",c=risk=="Élevé"?"Augmenter la publicité":risk=="Moyen"?"Attirer plus de contributeurs":"Continuer la stratégie";
+document.getElementById("r").innerHTML=[["Progression",p.toFixed(1)+"%"],["Jours restants",d-j+" jours"],["Moyenne / jour",v.toFixed(0)+" DT"],["Prévision finale",f.toFixed(0)+" DT"],["Risque",risk],["Alerte",risk=="Élevé"?"Campagne en difficulté":"Situation favorable"]].map(x=>"<div class='result'>"+x[0]+"<h2>"+x[1]+"</h2></div>").join("");
 document.getElementById("a").innerHTML="💡 <b>Recommandation</b><p>"+c+"</p>";
 }
 go();
