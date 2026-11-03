@@ -1,31 +1,26 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-<title>Risk Detection</title>
-<style>body{text-align:center;font-family:Arial;background:#eef2f7;padding:25px}main{background:white;padding:20px;border-radius:15px;max-width:400px;margin:auto}input,button{padding:10px;margin:8px}button{background:#1769aa;color:white;border:0;border-radius:8px}</style>
-</head>
-<body>
-<main>
-<h1>🐝 Risk Detection</h1>
-<p>Analyse des campagnes CnBees</p>
+<head><title>CnBees Risk Detection</title>
+<style>body{text-align:center;font-family:Arial;background:#eef2f7;padding:20px}main{background:white;padding:20px;border-radius:15px;max-width:420px;margin:auto}input,button{padding:10px;margin:7px}button{background:#1769aa;color:white;border:0;border-radius:8px}</style></head>
+<body><main>
+<h1>🐝 CnBees</h1><h3>Smart Risk Detection</h3>
 <input id="o" type="number" placeholder="Objectif (DT)">
 <input id="m" type="number" placeholder="Montant collecté (DT)">
-<input id="j" type="number" placeholder="Jours restants">
-<button onclick="analyse()">Analyser</button>
-<div id="r"></div>
-</main>
-<script>
-function analyse(){
-let o=+document.getElementById("o").value,m=+document.getElementById("m").value,j=+document.getElementById("j").value;
-if(o<=0||m<0||j<0||!document.getElementById("o").value||!document.getElementById("m").value||!document.getElementById("j").value)return alert("Données invalides");
-let t=m/o*100,r=t>=100?"Objectif atteint":t<50?"Risque élevé":t<80?"Risque moyen":"Risque faible";
-let c=t>=100?"Campagne réussie":t<50?"Augmenter la promotion":t<80?"Attirer plus de contributeurs":"Continuer le suivi";
-document.getElementById("r").innerHTML="<h3>"+r+"</h3>Progression: "+t.toFixed(1)+"%<br><progress value='"+Math.min(t,100)+"' max='100'></progress><p>Conseil: "+c+"</p>";
-}
-</script>
-</body>
-</html>
+<input id="d" type="number" placeholder="Durée totale (jours)">
+<input id="j" type="number" placeholder="Jours écoulés">
+<button onclick="go()">Analyser la campagne</button><div id="r"></div>
+</main><script>
+function go(){
+let o=+document.getElementById("o").value,m=+document.getElementById("m").value,d=+document.getElementById("d").value,j=+document.getElementById("j").value;
+if(!o||m<0||!d||j<0||j>d||!document.getElementById("o").value||!document.getElementById("m").value){alert("Vérifiez les données");return;}
+let p=m/o*100,v=m/Math.max(j,1),pre=v*d,a=o*j/d,rest=Math.max(0,d-j);
+let risk=p>=100?"Objectif atteint":p>=a/o*100*.9?"Faible":p>=a/o*100*.6?"Moyen":"Élevé";
+let conseil=risk=="Élevé"?"Augmenter la publicité":risk=="Moyen"?"Attirer plus de contributeurs":"Continuer la stratégie";
+document.getElementById("r").innerHTML="<hr><h3>Résultats</h3>Progression: "+p.toFixed(1)+"%<br>Jours écoulés: "+j+"<br>Jours restants: "+rest+"<br>Moyenne/jour: "+v.toFixed(2)+" DT<br>Prévision finale: "+pre.toFixed(0)+" DT<br><h3>Risque: "+risk+"</h3><b>Alerte: "+(risk=="Élevé"?"Campagne en difficulté":"Suivi de campagne")+"</b><p>Conseil: "+conseil+"</p>";
+}</script></body></html>
+ 
+
 
 
 
