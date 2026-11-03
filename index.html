@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head><title>CnBees Risk Detection</title>
@@ -19,7 +18,8 @@ let risk=p>=100?"Objectif atteint":p>=a/o*100*.9?"Faible":p>=a/o*100*.6?"Moyen":
 let conseil=risk=="Élevé"?"Augmenter la publicité":risk=="Moyen"?"Attirer plus de contributeurs":"Continuer la stratégie";
 document.getElementById("r").innerHTML="<hr><h3>Résultats</h3>Progression: "+p.toFixed(1)+"%<br>Jours écoulés: "+j+"<br>Jours restants: "+rest+"<br>Moyenne/jour: "+v.toFixed(2)+" DT<br>Prévision finale: "+pre.toFixed(0)+" DT<br><h3>Risque: "+risk+"</h3><b>Alerte: "+(risk=="Élevé"?"Campagne en difficulté":"Suivi de campagne")+"</b><p>Conseil: "+conseil+"</p>";
 }</script></body></html>
- 
+
+
 
 
 
