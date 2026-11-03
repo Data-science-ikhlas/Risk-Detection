@@ -1,34 +1,24 @@
-
-<!DOCTYPE html>
 <html>
-<head>
-<title>CnBees - Risk Detection</title>
-<style>
-body{font-family:Arial;background:#eef2f7;text-align:center;padding:20px}main{background:white;padding:25px;border-radius:15px;max-width:500px;margin:auto}input{padding:10px;margin:7px;width:85%}button{padding:12px;background:#e5a900;border:0;border-radius:8px;cursor:pointer}#resultat{line-height:1.8;margin-top:20px}
-</style>
-</head>
-<body>
-<main>
-<h1>🐝 CnBees</h1><h3>Risk Detection</h3>
-<input id="o" type="number" placeholder="Objectif financier (DT)">
-<input id="m" type="number" placeholder="Montant collecté (DT)">
-<p>Date début: <input id="d1" type="date"></p>
-<p>Date fin: <input id="d2" type="date"></p>
-<button onclick="analyser()">Analyser la campagne</button>
-<div id="resultat"></div>
-</main>
+<head><title>CnBees Monitor</title></head>
+<body style="font-family:Arial;text-align:center;background:#fff8df;padding:20px">
+<h1>🐝 CnBees Monitor</h1>
+<h3>Campaign Performance</h3>
+<input id="goal" type="number" placeholder="Funding goal (DT)"><br><br>
+<input id="fund" type="number" placeholder="Collected amount (DT)"><br><br>
+<input id="days" type="number" placeholder="Remaining days"><br><br>
+<button onclick="check()">Check Campaign</button>
+<div id="result"></div>
 <script>
-function analyser(){
-let o=+document.getElementById("o").value,m=+document.getElementById("m").value,s=new Date(document.getElementById("d1").value),e=new Date(document.getElementById("d2").value),n=new Date();
-if(!o||m<0||!document.getElementById("d1").value||!document.getElementById("d2").value||e<=s){alert("Vérifiez les données");return;}
-let total=Math.ceil((e-s)/86400000),j=Math.min(total,Math.max(0,Math.floor((n-s)/86400000))),rest=Math.max(0,total-j),moy=m/Math.max(1,j),prevision=moy*total,attendu=o*j/total,taux=m/o*100;
-let perf=attendu>0?m/attendu:prevision/o,risque=perf>=0.9?"Faible":perf>=0.6?"Moyen":"Élevé";
-let conseil=risque=="Faible"?"Continuer la stratégie actuelle":risque=="Moyen"?"Renforcer la communication et attirer des contributeurs":"Lancer une campagne promotionnelle urgente";
-document.getElementById("resultat").innerHTML="<h3>Résultat de l'analyse</h3>Jours écoulés: "+j+" / "+total+"<br>Jours restants: "+rest+"<br>Moyenne/jour: "+moy.toFixed(2)+" DT<br>Progression: "+taux.toFixed(1)+"%<br>Prévision finale: "+prevision.toFixed(2)+" DT<br><h3>Risque: "+risque+"</h3><b>ALERTE: "+(risque=="Élevé"?"Campagne en difficulté":risque=="Moyen"?"Surveillance nécessaire":"Situation favorable")+"</b><p>Recommandation: "+conseil+"</p>";
+function check(){
+let g=+document.getElementById("goal").value,f=+document.getElementById("fund").value,d=+document.getElementById("days").value;
+if(g<=0||f<0||d<0||!document.getElementById("goal").value||!document.getElementById("fund").value||!document.getElementById("days").value){alert("Invalid data");return;}
+let p=f/g*100,needed=(g-f)/Math.max(d,1),risk=p>=100?"Successful":p>=70?"Low Risk":p>=40?"Medium Risk":"High Risk";
+let advice=risk=="Successful"?"Goal achieved!":risk=="Low Risk"?"Keep your campaign active":risk=="Medium Risk"?"Promote your campaign":"Increase marketing urgently";
+document.getElementById("result").innerHTML="<h3>"+p.toFixed(1)+"% funded</h3>Remaining: "+(g-f).toFixed(0)+" DT<br>Needed per day: "+needed.toFixed(0)+" DT<br>Risk: "+risk+"<br>Advice: "+advice;
 }
-</script>
-</body>
-</html>
+</script></body></html>
+
+
 
 
 
