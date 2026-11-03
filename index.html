@@ -1,26 +1,30 @@
+
+<!DOCTYPE html>
 <html>
-<head><title>BeeAlert</title></head>
+<head>
+<title>BeeAlert</title>
+</head>
 <body>
 <h1>BeeAlert 🐝</h1>
-<h2>Risk Detection</h2>
 <p>Objectif financier :</p>
-<input id="objectif" type="number">
+<input id="o" type="number">
 <p>Montant collecté :</p>
-<input id="montant" type="number">
-<button onclick="analyser()">Analyser</button>
-<h3 id="resultat"></h3>
+<input id="m" type="number">
+<button onclick="test()">Analyser</button>
+<h3 id="r"></h3>
 <script>
-function analyser() {
-let o = Number(document.getElementById("objectif").value);
-let m = Number(document.getElementById("montant").value);
-if (o <= 0 || m < 0) { alert("Valeurs invalides"); return; }
-let taux = m / o * 100;
-let risque = taux >= 100 ? "Objectif atteint" : taux >= 70 ? "Risque faible" : "Risque élevé";
-document.getElementById("resultat").innerHTML = "Progression : " + taux.toFixed(1) + "%<br>" + risque;
+function test(){
+let o=Number(document.getElementById("o").value);
+let m=Number(document.getElementById("m").value);
+if(o<=0 || m<0){alert("Valeurs invalides");return;}
+let t=m/o*100;
+let r=t>=100?"Objectif atteint":t>=70?"Risque faible":"Risque élevé";
+document.getElementById("r").innerHTML="Progression : "+t.toFixed(1)+"%<br>"+r;
 }
 </script>
 </body>
 </html>
+
 
 
 
