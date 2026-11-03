@@ -1,1 +1,27 @@
 
+<html>
+<head><title>BeeAlert</title></head>
+<body>
+<h1>BeeAlert 🐝</h1>
+<h2>Risk Detection</h2>
+<p>Objectif financier :</p>
+<input id="objectif" type="number">
+<p>Montant collecté :</p>
+<input id="montant" type="number">
+<button onclick="analyser()">Analyser</button>
+<h3 id="resultat"></h3>
+<script>
+function analyser() {
+let o = Number(document.getElementById("objectif").value);
+let m = Number(document.getElementById("montant").value);
+if (o <= 0 || m < 0) { alert("Valeurs invalides"); return; }
+let taux = m / o * 100;
+let risque = taux >= 100 ? "Objectif atteint" : taux >= 70 ? "Risque faible" : "Risque élevé";
+document.getElementById("resultat").innerHTML = "Progression : " + taux.toFixed(1) + "%<br>" + risque;
+}
+</script>
+</body>
+</html>
+
+
+
