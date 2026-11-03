@@ -1,29 +1,31 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-<title>BeeAlert</title>
+<title>Risk Detection</title>
 </head>
 <body>
-<h1>BeeAlert 🐝</h1>
-<p>Objectif financier :</p>
+<h1>Risk Detection</h1>
+<p>Objectif financier:</p>
 <input id="o" type="number">
-<p>Montant collecté :</p>
+<p>Montant collecté:</p>
 <input id="m" type="number">
 <button onclick="test()">Analyser</button>
-<h3 id="r"></h3>
+<p id="resultat"></p>
 <script>
 function test(){
 let o=Number(document.getElementById("o").value);
 let m=Number(document.getElementById("m").value);
-if(o<=0 || m<0){alert("Valeurs invalides");return;}
 let t=m/o*100;
-let r=t>=100?"Objectif atteint":t>=70?"Risque faible":"Risque élevé";
-document.getElementById("r").innerHTML="Progression : "+t.toFixed(1)+"%<br>"+r;
+let r=t>=100?"Risque faible":t>=70?"Risque moyen":"Risque élevé";
+document.getElementById("resultat").innerHTML=t.toFixed(1)+"% - "+r;
 }
 </script>
 </body>
 </html>
+
+
+
+
 
 
 
