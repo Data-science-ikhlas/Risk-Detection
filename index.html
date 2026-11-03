@@ -1,24 +1,30 @@
+
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <title>Risk Detection</title>
+<style>body{font-family:Arial;background:#eef2f7;text-align:center;padding:30px}main{background:white;padding:25px;border-radius:15px;max-width:450px;margin:auto}input{padding:10px;margin:8px;width:80%}button{padding:12px;background:#1769aa;color:white;border:0;border-radius:8px;cursor:pointer}#resultat{margin-top:20px}</style>
 </head>
 <body>
+<main>
 <h1>Risk Detection</h1>
-<p>Objectif financier:</p>
-<input id="o" type="number">
-<p>Montant collecté:</p>
-<input id="m" type="number">
-<button onclick="test()">Analyser</button>
-<p id="resultat"></p>
+<p>Analyse des risques des campagnes</p>
+<input id="objectif" type="number" placeholder="Objectif financier (DT)">
+<input id="montant" type="number" placeholder="Montant collecté (DT)">
+<input id="jours" type="number" placeholder="Jours restants">
+<button onclick="analyser()">Analyser les risques</button>
+<div id="resultat"></div>
+</main>
 <script>
-function test(){
-let o=Number(document.getElementById("o").value);
-let m=Number(document.getElementById("m").value);
-let t=m/o*100;
-let r=t>=100?"Risque faible":t>=70?"Risque moyen":"Risque élevé";
-document.getElementById("resultat").innerHTML=t.toFixed(1)+"% - "+r;
+function analyser(){
+let o=+document.getElementById("objectif").value,m=+document.getElementById("montant").value,j=+document.getElementById("jours").value;
+if(o<=0||m<0||j<0||document.getElementById("objectif").value===""||document.getElementById("montant").value===""||document.getElementById("jours").value===""){alert("Vérifiez les données");return;}
+let t=m/o*100,r=t>=100?"Objectif atteint":t<50?"Risque élevé":t<80?"Risque moyen":"Risque faible";
+let c=t>=100?"Campagne réussie":t<50&&j<=3?"Augmenter la promotion rapidement":t<50?"Renforcer la communication":t<80?"Encourager les contributions":"Continuer le suivi";
+document.getElementById("resultat").innerHTML="<h3>"+r+"</h3><p>Progression: "+t.toFixed(1)+"%</p><progress value='"+Math.min(t,100)+"' max='100'></progress><p>Recommandation: "+c+"</p>";
 }
 </script>
 </body>
 </html>
+
